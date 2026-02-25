@@ -1,0 +1,57 @@
+{
+  "name": "n8n-nodes-feishu-plus",
+  "version": "0.1.0",
+  "description": "Feishu/Lark Bitable operations with production-grade retry, circuit breaker and test coverage",
+  "license": "MIT",
+  "homepage": "https://github.com/nicekate/n8n-nodes-feishu-plus",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicekate/n8n-nodes-feishu-plus.git"
+  },
+  "main": "dist/nodes/Feishu/Feishu.node.js",
+  "keywords": [
+    "n8n-community-node-package",
+    "feishu",
+    "lark",
+    "飞书",
+    "bitable",
+    "多维表格"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/FeishuPlusApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Feishu/Feishu.node.js"
+    ]
+  },
+  "scripts": {
+    "build": "tsc && cp nodes/Feishu/*.svg dist/nodes/Feishu/",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint . --ext .ts",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "n8n-workflow": "^1.30.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "n8n-workflow": ">=1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
