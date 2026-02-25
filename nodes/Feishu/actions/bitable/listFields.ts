@@ -18,7 +18,7 @@ export async function executeListFields(
 	while (hasMore) {
 		const data = await feishuRequest.call(this, {
 			method: 'GET',
-			endpoint: `/open-apis/bitable/v1/apps/${appToken}/tables/${tableId}/fields`,
+			endpoint: `/open-apis/bitable/v1/apps/${encodeURIComponent(appToken)}/tables/${encodeURIComponent(tableId)}/fields`,
 			qs,
 		});
 

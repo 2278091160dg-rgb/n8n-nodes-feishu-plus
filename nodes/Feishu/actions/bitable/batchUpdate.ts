@@ -1,5 +1,6 @@
 import { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
 import { feishuRequest } from '../../../../transport/request';
+import { simplifyRecords } from '../../../../transport/response';
 
 export async function executeBatchUpdate(
 	this: IExecuteFunctions,
@@ -21,13 +22,14 @@ export async function executeBatchUpdate(
 
 	const data = await feishuRequest.call(this, {
 		method: 'POST',
-		endpoint: `/open-apis/bitable/v1/apps/${appToken}/tables/${tableId}/records/batch_update`,
+		endpoint: `/open-apis/bitable/v1/apps/${encodeURIComponent(appToken)}/tables/${encodeURIComponent(tableId)}/records/batch_update`,
 		body: { records: recordsArray },
 		qs,
 	});
 
 	const items = data?.records || [];
-	return items.map((record: any) => ({
+	const finalRecords = options.simplify !== false ? simplifyRecords(items) : items;
+	return finalRecords.map((record: any) => ({
 		json: record,
 		pairedItem: { item: index },
 	}));

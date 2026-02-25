@@ -11,7 +11,7 @@ export async function executeDeleteRecord(
 
 	await feishuRequest.call(this, {
 		method: 'DELETE',
-		endpoint: `/open-apis/bitable/v1/apps/${appToken}/tables/${tableId}/records/${recordId}`,
+		endpoint: `/open-apis/bitable/v1/apps/${encodeURIComponent(appToken)}/tables/${encodeURIComponent(tableId)}/records/${encodeURIComponent(recordId)}`,
 	});
 
 	return [{ json: { success: true, deleted: true, record_id: recordId }, pairedItem: { item: index } }];

@@ -92,8 +92,25 @@ export class FeishuPlusApi implements ICredentialType {
 		request: {
 			baseURL:
 				'={{$credentials.url === "custom" ? $credentials.customUrl : $credentials.url}}',
-			url: '/open-apis/bitable/v1/apps/empty/tables',
-			method: 'GET',
+			url: '/open-apis/auth/v3/tenant_access_token/internal',
+			method: 'POST',
+			body: {
+				app_id: '={{$credentials.appId}}',
+				app_secret: '={{$credentials.appSecret}}',
+			},
+			headers: {
+				'Content-Type': 'application/json',
+			},
 		},
+		rules: [
+			{
+				type: 'responseSuccessBody',
+				properties: {
+					key: 'code',
+					value: 0,
+					message: 'Invalid App ID or App Secret. Please check your Feishu credentials.',
+				},
+			},
+		],
 	};
 }

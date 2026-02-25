@@ -16,7 +16,7 @@ export async function executeCreateRecord(
 
 	const data = await feishuRequest.call(this, {
 		method: 'POST',
-		endpoint: `/open-apis/bitable/v1/apps/${appToken}/tables/${tableId}/records`,
+		endpoint: `/open-apis/bitable/v1/apps/${encodeURIComponent(appToken)}/tables/${encodeURIComponent(tableId)}/records`,
 		body: { fields },
 		qs,
 	});

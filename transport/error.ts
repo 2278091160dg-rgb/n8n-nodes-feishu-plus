@@ -1,5 +1,15 @@
 import { IExecuteFunctions, NodeApiError } from 'n8n-workflow';
 
+export class FeishuApiError extends Error {
+	public readonly feishuCode: number;
+
+	constructor(message: string, feishuCode: number) {
+		super(message);
+		this.name = 'FeishuApiError';
+		this.feishuCode = feishuCode;
+	}
+}
+
 function escapeRegex(str: string): string {
 	return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -44,7 +54,7 @@ export function sanitizeError(
 		description = description.replace(regex, masked);
 	}
 
-	const feishuCode = error.feishuCode as number | undefined;
+	const feishuCode = error instanceof FeishuApiError ? error.feishuCode : (error.feishuCode as number | undefined);
 	const httpCode = error.statusCode || error.httpCode || 0;
 
 	let friendlyMessage = message;

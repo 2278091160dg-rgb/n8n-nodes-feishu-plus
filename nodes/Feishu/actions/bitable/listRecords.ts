@@ -26,7 +26,7 @@ export async function executeListRecords(
 	while (hasMore) {
 		const data = await feishuRequest.call(this, {
 			method: 'GET',
-			endpoint: `/open-apis/bitable/v1/apps/${appToken}/tables/${tableId}/records`,
+			endpoint: `/open-apis/bitable/v1/apps/${encodeURIComponent(appToken)}/tables/${encodeURIComponent(tableId)}/records`,
 			qs,
 		});
 

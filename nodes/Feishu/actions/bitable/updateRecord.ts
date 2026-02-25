@@ -17,7 +17,7 @@ export async function executeUpdateRecord(
 
 	const data = await feishuRequest.call(this, {
 		method: 'PUT',
-		endpoint: `/open-apis/bitable/v1/apps/${appToken}/tables/${tableId}/records/${recordId}`,
+		endpoint: `/open-apis/bitable/v1/apps/${encodeURIComponent(appToken)}/tables/${encodeURIComponent(tableId)}/records/${encodeURIComponent(recordId)}`,
 		body: { fields },
 		qs,
 	});

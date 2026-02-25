@@ -1,3 +1,5 @@
+import { FeishuApiError } from './error';
+
 export interface FeishuResponse {
 	code: number;
 	msg: string;
@@ -13,9 +15,10 @@ export interface FeishuPaginatedData {
 
 export function parseFeishuResponse(response: any): any {
 	if (response.code !== undefined && response.code !== 0) {
-		const error: any = new Error(`Feishu API error: ${response.msg || 'Unknown error'}`);
-		error.feishuCode = response.code;
-		throw error;
+		throw new FeishuApiError(
+			`Feishu API error: ${response.msg || 'Unknown error'}`,
+			response.code,
+		);
 	}
 	return response.data ?? response;
 }

@@ -35,7 +35,7 @@ export async function executeSearchRecords(
 	while (hasMore) {
 		const data = await feishuRequest.call(this, {
 			method: 'POST',
-			endpoint: `/open-apis/bitable/v1/apps/${appToken}/tables/${tableId}/records/search`,
+			endpoint: `/open-apis/bitable/v1/apps/${encodeURIComponent(appToken)}/tables/${encodeURIComponent(tableId)}/records/search`,
 			body,
 			qs,
 		});

@@ -17,7 +17,7 @@ export async function executeBatchDelete(
 
 	await feishuRequest.call(this, {
 		method: 'POST',
-		endpoint: `/open-apis/bitable/v1/apps/${appToken}/tables/${tableId}/records/batch_delete`,
+		endpoint: `/open-apis/bitable/v1/apps/${encodeURIComponent(appToken)}/tables/${encodeURIComponent(tableId)}/records/batch_delete`,
 		body: { records: recordIds },
 	});
 

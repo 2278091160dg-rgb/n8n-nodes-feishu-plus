@@ -4,7 +4,7 @@ import {
 	IHttpRequestOptions,
 	NodeApiError,
 } from 'n8n-workflow';
-import { sanitizeError } from './error';
+import { sanitizeError, FeishuApiError } from './error';
 import { parseFeishuResponse } from './response';
 
 export interface FeishuRequestOptions {
@@ -90,7 +90,7 @@ export async function feishuRequest(
 		} catch (error: any) {
 			lastError = error;
 			const httpCode = error.statusCode || error.httpCode || 0;
-			const feishuCode = error.feishuCode as number | undefined;
+			const feishuCode = error instanceof FeishuApiError ? error.feishuCode : undefined;
 
 			// Token expired — clear token and retry once (no recursion)
 			if (feishuCode && TOKEN_EXPIRED_CODES.includes(feishuCode) && !tokenRefreshed) {
