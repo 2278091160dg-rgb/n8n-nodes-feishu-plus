@@ -75,7 +75,8 @@ describe('FeishuPlusApi Credentials', () => {
 
 	it('should have test request config', () => {
 		expect(credentials.test).toBeDefined();
-		expect((credentials.test as any).request.url).toContain('/open-apis/bitable');
+		expect((credentials.test as any).request.url).toContain('/open-apis/auth/v3/tenant_access_token/internal');
+		expect((credentials.test as any).request.method).toBe('POST');
 	});
 
 	describe('preAuthentication', () => {

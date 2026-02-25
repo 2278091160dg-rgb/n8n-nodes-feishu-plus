@@ -12,13 +12,24 @@ jest.mock('n8n-workflow', () => ({
 	},
 }));
 
-jest.mock('../../../transport/error', () => ({
-	sanitizeError: jest.fn((_ctx, error, _secret, _token) => {
-		const err = new Error(error.message || 'Sanitized error');
-		(err as any).httpCode = String(error.statusCode || error.httpCode || 0);
-		return err;
-	}),
-}));
+jest.mock('../../../transport/error', () => {
+	class FeishuApiError extends Error {
+		feishuCode: number;
+		constructor(message: string, feishuCode: number) {
+			super(message);
+			this.name = 'FeishuApiError';
+			this.feishuCode = feishuCode;
+		}
+	}
+	return {
+		FeishuApiError,
+		sanitizeError: jest.fn((_ctx, error, _secret, _token) => {
+			const err = new Error(error.message || 'Sanitized error');
+			(err as any).httpCode = String(error.statusCode || error.httpCode || 0);
+			return err;
+		}),
+	};
+});
 
 describe('feishuRequest', () => {
 	let mockContext: any;
