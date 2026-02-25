@@ -13,6 +13,10 @@ export async function executeBatchCreate(
 
 	const recordsArray = typeof records === 'string' ? JSON.parse(records) : records;
 
+	if (!Array.isArray(recordsArray) || recordsArray.length === 0) {
+		throw new Error('Records must be a non-empty array');
+	}
+
 	if (recordsArray.length > 500) {
 		throw new Error('Batch create supports max 500 records per request');
 	}

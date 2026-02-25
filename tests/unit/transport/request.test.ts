@@ -177,7 +177,7 @@ describe('feishuRequest', () => {
 	});
 
 	it('should throw circuit breaker error when open', async () => {
-		setCircuitBreakerState(5, Date.now() + 30000);
+		setCircuitBreakerState(10, Date.now() + 60000);
 
 		await expect(
 			feishuRequest.call(mockContext, { method: 'GET', endpoint: '/test' }),
@@ -187,7 +187,7 @@ describe('feishuRequest', () => {
 	});
 
 	it('should reset to half-open when circuit breaker timeout expires', async () => {
-		setCircuitBreakerState(5, Date.now() - 1000);
+		setCircuitBreakerState(10, Date.now() - 1000);
 		mockHttpRequest.mockResolvedValue({ code: 0, data: { ok: true } });
 
 		const result = await feishuRequest.call(mockContext, { method: 'GET', endpoint: '/test' });
@@ -209,7 +209,7 @@ describe('feishuRequest', () => {
 	});
 
 	it('should open circuit breaker after threshold failures', async () => {
-		setCircuitBreakerState(4, 0);
+		setCircuitBreakerState(9, 0);
 		mockHttpRequest.mockRejectedValue({ message: 'Bad request', statusCode: 400 });
 
 		try {
@@ -217,7 +217,7 @@ describe('feishuRequest', () => {
 		} catch (_e) { /* expected */ }
 
 		const state = getCircuitBreakerState();
-		expect(state.failures).toBe(5);
+		expect(state.failures).toBe(10);
 		expect(state.openUntil).toBeGreaterThan(Date.now());
 	});
 

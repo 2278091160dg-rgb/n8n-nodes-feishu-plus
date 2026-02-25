@@ -46,6 +46,20 @@ export function sanitizeError(
 	let message = error.message || 'Unknown error';
 	let description = error.description || '';
 
+	// Also sanitize any stringified request body that might contain secrets
+	if (error.options?.body) {
+		try {
+			const bodyStr = typeof error.options.body === 'string'
+				? error.options.body
+				: JSON.stringify(error.options.body);
+			if (bodyStr.includes(appSecret) || bodyStr.includes(accessToken)) {
+				delete error.options.body;
+			}
+		} catch (_e) {
+			// Ignore serialization errors
+		}
+	}
+
 	const sensitiveValues = [appSecret, accessToken].filter(Boolean);
 	for (const val of sensitiveValues) {
 		const masked = val.substring(0, 4) + '****';

@@ -23,8 +23,8 @@ const TOKEN_EXPIRED_CODES = [99991663, 99991668];
 
 let circuitBreakerFailures = 0;
 let circuitBreakerOpenUntil = 0;
-const CIRCUIT_BREAKER_THRESHOLD = 5;
-const CIRCUIT_BREAKER_RESET_MS = 30000;
+const CIRCUIT_BREAKER_THRESHOLD = 10;
+const CIRCUIT_BREAKER_RESET_MS = 60000;
 
 export function resetCircuitBreaker(): void {
 	circuitBreakerFailures = 0;

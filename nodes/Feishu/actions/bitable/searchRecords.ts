@@ -43,7 +43,9 @@ export async function executeSearchRecords(
 		const items = data?.items || [];
 		allItems.push(...items);
 
-		hasMore = !!data?.has_more && !!data?.page_token;
+		// Feishu returns has_more + page_token for pagination
+		// On first page with 0 results, has_more is false — stop immediately
+		hasMore = data?.has_more === true && typeof data?.page_token === 'string' && data.page_token.length > 0;
 		if (hasMore) {
 			body.page_token = data.page_token;
 		}
