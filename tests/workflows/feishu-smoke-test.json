@@ -1,0 +1,88 @@
+{
+  "name": "Feishu Plus v0.1.0 Smoke Test",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "start-1",
+      "name": "Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "resource": "bitable",
+        "operation": "listTables",
+        "appToken": "REPLACE_APP_TOKEN",
+        "returnAll": false,
+        "limit": 5,
+        "options": { "simplify": true }
+      },
+      "id": "cred-test-1",
+      "name": "T1 Credential Test (List Tables)",
+      "type": "n8n-nodes-feishu-plus.feishuPlus",
+      "typeVersion": 1,
+      "position": [500, 100],
+      "credentials": { "feishuPlusApi": { "id": "REPLACE", "name": "Feishu Plus" } },
+      "notes": "凭证连通测试：如果 App ID/Secret 正确，应返回多维表格列表。失败则说明凭证配置有误。"
+    },
+    {
+      "parameters": {
+        "resource": "bitable",
+        "operation": "listRecords",
+        "appToken": "REPLACE_APP_TOKEN",
+        "tableId": "REPLACE_TABLE_ID",
+        "returnAll": false,
+        "limit": 5,
+        "options": { "simplify": true }
+      },
+      "id": "read-records-1",
+      "name": "T2 Read Records",
+      "type": "n8n-nodes-feishu-plus.feishuPlus",
+      "typeVersion": 1,
+      "position": [740, 100],
+      "credentials": { "feishuPlusApi": { "id": "REPLACE", "name": "Feishu Plus" } },
+      "notes": "读取多维表格前 5 条记录，验证数据读取 + simplify 输出格式。"
+    },
+    {
+      "parameters": {
+        "resource": "bitable",
+        "operation": "createRecord",
+        "appToken": "REPLACE_APP_TOKEN",
+        "tableId": "REPLACE_TABLE_ID",
+        "fields": "{\"Name\": \"N8N Smoke Test\", \"Status\": \"Active\", \"Source\": \"n8n-workflow-test\"}",
+        "options": { "simplify": true }
+      },
+      "id": "write-record-1",
+      "name": "T3 Write Record",
+      "type": "n8n-nodes-feishu-plus.feishuPlus",
+      "typeVersion": 1,
+      "position": [980, 100],
+      "credentials": { "feishuPlusApi": { "id": "REPLACE", "name": "Feishu Plus" } },
+      "notes": "写入单条记录，验证 createRecord 操作。字段名需匹配目标表格实际字段。"
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [[
+        { "node": "T1 Credential Test (List Tables)", "type": "main", "index": 0 }
+      ]]
+    },
+    "T1 Credential Test (List Tables)": {
+      "main": [[
+        { "node": "T2 Read Records", "type": "main", "index": 0 }
+      ]]
+    },
+    "T2 Read Records": {
+      "main": [[
+        { "node": "T3 Write Record", "type": "main", "index": 0 }
+      ]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "feishu-smoke-test",
+    "notes": "串行链路：凭证验证 → 读取记录 → 写入记录。替换 REPLACE_* 占位符后导入 N8N 执行。"
+  }
+}
