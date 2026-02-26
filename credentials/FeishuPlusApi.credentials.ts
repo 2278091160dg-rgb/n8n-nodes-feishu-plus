@@ -7,24 +7,24 @@ import {
 
 export class FeishuPlusApi implements ICredentialType {
 	name = 'feishuPlusApi';
-	displayName = 'Feishu Plus API';
+	displayName = '飞书 Plus API / Feishu Plus API';
 	documentationUrl = 'https://open.feishu.cn/document/server-docs/api-call-guide/calling-process';
 
 	properties: INodeProperties[] = [
 		{
-			displayName: 'Base URL',
+			displayName: '接口地址 / Base URL',
 			name: 'url',
 			type: 'options',
 			options: [
-				{ name: 'Feishu (China)', value: 'https://open.feishu.cn' },
-				{ name: 'Lark (Global)', value: 'https://open.larksuite.com' },
-				{ name: 'Custom', value: 'custom' },
+				{ name: '飞书 (中国) / Feishu (China)', value: 'https://open.feishu.cn' },
+				{ name: 'Lark (国际) / Lark (Global)', value: 'https://open.larksuite.com' },
+				{ name: '自定义 / Custom', value: 'custom' },
 			],
 			default: 'https://open.feishu.cn',
 			required: true,
 		},
 		{
-			displayName: 'Custom URL',
+			displayName: '自定义地址 / Custom URL',
 			name: 'customUrl',
 			type: 'string',
 			default: '',
@@ -36,14 +36,14 @@ export class FeishuPlusApi implements ICredentialType {
 			},
 		},
 		{
-			displayName: 'App ID',
+			displayName: '应用 ID / App ID',
 			name: 'appId',
 			type: 'string',
 			default: '',
 			required: true,
 		},
 		{
-			displayName: 'App Secret',
+			displayName: '应用密钥 / App Secret',
 			name: 'appSecret',
 			type: 'string',
 			typeOptions: { password: true },
@@ -51,7 +51,7 @@ export class FeishuPlusApi implements ICredentialType {
 			required: true,
 		},
 		{
-			displayName: 'Access Token',
+			displayName: '访问令牌 / Access Token',
 			name: 'accessToken',
 			type: 'hidden',
 			typeOptions: {

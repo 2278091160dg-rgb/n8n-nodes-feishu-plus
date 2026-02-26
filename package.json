@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-feishu-plus",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Feishu/Lark Bitable operations with production-grade retry, circuit breaker and test coverage",
   "license": "MIT",
   "homepage": "https://github.com/nicekate/n8n-nodes-feishu-plus",

@@ -12,7 +12,7 @@ describe('FeishuPlusApi Credentials', () => {
 	});
 
 	it('should have correct display name', () => {
-		expect(credentials.displayName).toBe('Feishu Plus API');
+		expect(credentials.displayName).toBe('飞书 Plus API / Feishu Plus API');
 	});
 
 	it('should have documentation URL', () => {
